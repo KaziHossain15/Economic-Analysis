@@ -50,3 +50,31 @@ for country in countries:
     data_dict[country] = {}
     for name, code in indicators.items():
         data_dict[country][name] = fetch_data(country, code)
+
+# Function to create DataFrame for a given country and indicator
+def create_dataframe(country, indicator_name):
+    data = data_dict[country][indicator_name]
+    if data:  # Ensure there is data
+        df = pd.DataFrame(data, columns=["Year", indicator_name])
+        df = df[df["Year"].between(2000, 2023)]  # Restrict to 2000s
+        return df
+    return pd.DataFrame()  # Return empty DataFrame if no data
+
+# Create money velocity function
+def calculate_money_velocity(country):
+    money_supply = create_dataframe(country, "Money Supply (M2)")
+    gdp = create_dataframe(country, "Real GDP (Current US$)")
+
+    if gdp.empty or money_supply.empty:
+        print(f"Insufficient data for {country} to calculate Money Velocity.")
+        return pd.DataFrame()
+    
+    # Merge the dataframes
+    df = pd.merge(gdp, money_supply, on="Year", how="inner") # merge on year
+
+    # Calculate money velocity using the equation: Money Velocity = GDP / Money Supply or MV=PY
+    df["Money Velocity"] = df["Real GDP (Current US$)"] / df["Money Supply (M2)"]
+    return df[["Year", "Money Velocity"]] # return only year and money velocity
+
+
+
