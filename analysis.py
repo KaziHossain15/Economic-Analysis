@@ -10,7 +10,7 @@ sns.set_theme(style="darkgrid")
 API_URL = "https://api.worldbank.org/v2/country/{}/indicator/{}?format=json&date=2000:2023"
 
 # Indicators and world bank codes
-Indicators = {
+indicators = {
     "Real GDP (Current US$)": "NY.GDP.MKTP.CD",
     "Real GDP Growth (%)": "NY.GDP.MKTP.KD.ZG",
     "GDP per Capita (US$)": "NY.GDP.PCAP.CD",
@@ -21,5 +21,23 @@ Indicators = {
 }
 
 # Define countries as the codes on the world bank API
-countries = ["BGD", "IND", "PAK", "USA"]  # We are analyzing the selected countries: Bangladesh, India, Pakistan, USA
+countries = ["BGD", "IND", "PAK", "USA"]  # We are analyzing the selected countries: Bangladesh, India, Pakistan, USA by default
 
+# Allow user to select countries dynamically
+user_input = input("Enter country codes separated by commas (default: BGD, IND, PAK, USA): ").strip().upper()
+
+# Use default countries if input is empty
+countries = [code.strip() for code in user_input.split(",")] if user_input else ["BGD", "IND", "PAK", "USA"]
+
+# This function will fetch the data from the World Bank API
+def fetch_data(country, indicator):
+    url = API_URL.format(country, indicator)
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        data = response.json()
+        if len(data) > 1 and "date" in data[1][0]:  # Ensure data format is correct
+            return [(int(entry["date"]), entry["value"]) for entry in data[1] if entry["value"] is not None]
+    except requests.exceptions.RequestException as e:
+        print(f"Error fetching data for {country} - {indicator}: {e}")
+    return []  # Return empty list if no data found
