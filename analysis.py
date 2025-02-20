@@ -17,5 +17,9 @@ Indicators = {
     "Inflation Rate (%)": "FP.CPI.TOTL.ZG",
     "Unemployment Rate (%)": "SL.UEM.TOTL.ZS",
     "Money Supply (M2)": "FM.LBL.BMNY.CN",  # Used for Money Velocity Calculation
-    "National Savings (% of GDP)": "NY.GNS.ICTR.ZS"
+    "National Savings (percent of GDP)": "NY.GNS.ICTR.ZS"
 }
+
+# Define countries as the codes on the world bank API
+countries = ["BGD", "IND", "PAK", "USA"]  # We are analyzing the selected countries: Bangladesh, India, Pakistan, USA
+
