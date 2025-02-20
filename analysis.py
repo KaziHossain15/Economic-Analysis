@@ -41,3 +41,12 @@ def fetch_data(country, indicator):
     except requests.exceptions.RequestException as e:
         print(f"Error fetching data for {country} - {indicator}: {e}")
     return []  # Return empty list if no data found
+
+# Store fetched data
+data_dict = {}
+
+# Fetches data for every country using the indicators
+for country in countries:
+    data_dict[country] = {}
+    for name, code in indicators.items():
+        data_dict[country][name] = fetch_data(country, code)
