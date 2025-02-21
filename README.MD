@@ -58,9 +58,6 @@ This project is a data visualization tool that analyzes and compares economic in
 - `matplotlib`
 - `seaborn`
 
-## License
-This project is licensed under the MIT License.
-
 ## Contributing
 Feel free to open issues or submit pull requests to improve the project!
 
