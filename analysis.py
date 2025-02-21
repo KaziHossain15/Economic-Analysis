@@ -17,7 +17,13 @@ indicators = {
     "Inflation Rate (%)": "FP.CPI.TOTL.ZG",
     "Unemployment Rate (%)": "SL.UEM.TOTL.ZS",
     "Money Supply (M2)": "FM.LBL.BMNY.CN",  # Used for Money Velocity Calculation
-    "National Savings (percent of GDP)": "NY.GNS.ICTR.ZS"
+    "National Savings (percent of GDP)": "NY.GNS.ICTR.ZS",
+    "Imports (Current US$)": "NE.IMP.GNFS.CD",
+    "Exports (Current US$)": "NE.EXP.GNFS.CD",
+    "Net Exports (Current US$)": "NE.RSB.GNFS.CD",
+    "Real Exchange Rate": "PX.REX.REER",
+    "Investments (Gross Capital Formation percentage of GDP)": "NE.GDI.TOTL.ZS",
+    "Real Interest Rate (%)": "FR.INR.RINR"
 }
 
 # Define countries as the codes on the world bank API
