@@ -76,5 +76,32 @@ def calculate_money_velocity(country):
     df["Money Velocity"] = df["Real GDP (Current US$)"] / df["Money Supply (M2)"]
     return df[["Year", "Money Velocity"]] # return only year and money velocity
 
+# Add Money Velocity to data dictionary
+for country in countries:
+    money_velocity_df = calculate_money_velocity(country)
+    if not money_velocity_df.empty:
+        data_dict[country]["Money Velocity"] = list(money_velocity_df.itertuples(index=False, name=None))
 
+# Visualization function
+def plot_indicator(indicator_name):
+    plt.figure(figsize=(10, 5))
+    
+    for country in countries:
+        df = create_dataframe(country, indicator_name)
+        if not df.empty:
+            plt.plot(df["Year"], df[indicator_name], marker="o", label=country)
 
+    plt.xlabel("Year")
+    plt.ylabel(indicator_name)
+    plt.title(f"{indicator_name} Over the Years")
+    plt.legend()
+    plt.xticks(rotation=45)
+    plt.grid(True)
+    plt.show()
+
+# Plot all indicators
+for indicator in indicators.keys():
+    plot_indicator(indicator)
+
+# Plot Money Velocity separately
+plot_indicator("Money Velocity")
