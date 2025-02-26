@@ -23,10 +23,12 @@ indicators = {
     "Net Exports (% of GDP)": "NE.RSB.GNFS.ZS",
     "Real Exchange Rate": "PX.REX.REER",
     "Investments (% of GDP)": "NE.GDI.TOTL.ZS",
-    "Real Interest Rate (%)": "FR.INR.RINR"
+    "Real Interest Rate (%)": "FR.INR.RINR",
+    "Government Spending (% of GDP)": "NE.CON.GOVT.ZS",
+    "Tax Revenue (% of GDP)": "GC.TAX.TOTL.GD.ZS"
 }
 
-# Define countries as the codes on the world bank API
+# Define countries as the codes on the World Bank API
 countries = ["BGD", "IND", "PAK", "USA"]
 
 # Allow user to select countries dynamically
