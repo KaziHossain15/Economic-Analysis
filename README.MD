@@ -50,6 +50,8 @@ This project is a data visualization tool that analyzes and compares economic in
 - Real Exchange Rates
 - Investments
 - Real Interest Rates
+- Government Spending (% of GDP)
+- Tax Revenue (% of GDP)"
 
 ## Dependencies
 - Python 3.x
