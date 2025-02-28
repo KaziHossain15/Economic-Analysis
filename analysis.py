@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import numpy as np
 import time
 
 # Set Seaborn style for better visuals
@@ -44,7 +45,7 @@ def fetch_data(country, indicator):
             response = requests.get(url)
             response.raise_for_status()
             data = response.json()
-            if len(data) > 1 and isinstance(data[1], list):
+            if len(data) > 1 and "date" in data[1][0]:
                 return [(int(entry["date"]), entry["value"]) for entry in data[1] if entry["value"] is not None]
         except requests.exceptions.RequestException as e:
             print(f"Error fetching data for {country} - {indicator}: {e}. Retrying...")
@@ -97,18 +98,66 @@ def plot_indicator(indicator_name):
     plt.grid(True)
     plt.show()
 
-# User interface for selecting which graph to display
-while True:
-    print("\nAvailable indicators:")
-    for key in indicators.keys():
-        print(f"- {key}")
-    print("- Money Velocity")
-    print("Type 'exit' to quit.")
+# Function to generate a heatmap of all indicators and top correlations
+def plot_correlation_heatmap():
+    combined_data = []
+    for country in countries:
+        country_data = pd.DataFrame()
+        for indicator in indicators.keys():
+            df = create_dataframe(country, indicator)
+            if not df.empty:
+                df.set_index("Year", inplace=True)
+                country_data = pd.concat([country_data, df], axis=1)
+        if not country_data.empty:
+            combined_data.append(country_data)
     
-    selected_indicator = input("Enter the indicator name to plot: ").strip()
-    if selected_indicator.lower() == "exit":
-        break
-    elif selected_indicator in indicators or selected_indicator == "Money Velocity":
-        plot_indicator(selected_indicator)
+    if combined_data:
+        final_df = pd.concat(combined_data, axis=0).dropna()
+        correlation_matrix = final_df.corr()
+        
+        # Plot heatmap
+        plt.figure(figsize=(12, 10))
+        sns.heatmap(correlation_matrix, annot=True, cmap="coolwarm", fmt=".2f", linewidths=0.5)
+        plt.title("Correlation Heatmap of Economic Indicators")
+        plt.show()
+        
+        # Find top correlated indicator pairs
+        correlation_pairs = correlation_matrix.unstack().reset_index()
+        correlation_pairs.columns = ["Indicator 1", "Indicator 2", "Correlation"]
+        correlation_pairs = correlation_pairs[correlation_pairs["Indicator 1"] != correlation_pairs["Indicator 2"]]
+        correlation_pairs["Correlation"] = correlation_pairs["Correlation"].abs()
+        top_correlations = correlation_pairs.sort_values(by="Correlation", ascending=False).head(10)
+        
+        # Save top correlations to a file
+        top_correlations.to_csv("top_correlations.txt", index=False, sep="\t")
+        print("Top correlations saved to 'top_correlations.txt'")
     else:
-        print("Invalid selection. Please choose a valid indicator.")
+        print("Not enough data available for correlation analysis.")
+
+# User Interface to Choose Graph Type
+while True:
+    print("\nChoose an option:")
+    print("1 - Plot an indicator over the years")
+    print("2 - Generate correlation heatmap and top correlations")
+    print("3 - Exit")
+
+    choice = input("Enter your choice (1/2/3): ").strip()
+
+    if choice == "1":
+        print("\nAvailable Indicators:")
+        for i, indicator in enumerate(indicators.keys(), 1):
+            print(f"{i}. {indicator}")
+        
+        indicator_choice = input("Enter the indicator name exactly as shown above: ").strip()
+        
+        if indicator_choice in indicators.keys() or indicator_choice == "Money Velocity":
+            plot_indicator(indicator_choice)
+        else:
+            print("Invalid indicator name. Please try again.")
+    elif choice == "2":
+        plot_correlation_heatmap()
+    elif choice == "3":
+        print("Exiting program.")
+        break
+    else:
+        print("Invalid choice. Please enter 1, 2, or 3.")

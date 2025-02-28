@@ -1,0 +1,11 @@
+Indicator 1	Indicator 2	Correlation
+Real GDP (Current US$)	GDP per Capita (US$)	0.9998896828363375
+GDP per Capita (US$)	Real GDP (Current US$)	0.9998896828363375
+Money Supply (M2)	Real GDP (Current US$)	0.9955459445275552
+Real GDP (Current US$)	Money Supply (M2)	0.9955459445275552
+GDP per Capita (US$)	Money Supply (M2)	0.9951606145181153
+Money Supply (M2)	GDP per Capita (US$)	0.9951606145181153
+Imports of Goods and Services (% of GDP)	Exports of Goods and Services (% of GDP)	0.9752451445336116
+Exports of Goods and Services (% of GDP)	Imports of Goods and Services (% of GDP)	0.9752451445336116
+Money Supply (M2)	Investments (% of GDP)	0.9520237067158244
+Investments (% of GDP)	Money Supply (M2)	0.9520237067158244
