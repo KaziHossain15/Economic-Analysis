@@ -12,6 +12,8 @@ This project is a **data visualization tool** that analyzes and compares economi
 - **Data filtering:** Filters out missing values to improve accuracy.
 - **Visualize trends** with Matplotlib and Seaborn.
 - **Interactive user interface:** Choose which economic indicators to plot.
+- **Correlation Heat Map:** Analyze relationships between indicators.
+- **Top Correlation Pairs:** Extracts the top 10 highest correlated indicator pairs and saves them to a text file.
 
 ## Installation
 
@@ -42,7 +44,10 @@ This project is a **data visualization tool** that analyzes and compares economi
    python analysis.py
    ```
 2. **Enter country codes** (e.g., `BGD, IND, USA, PAK`) or press Enter to use default values.
-3. **Select an economic indicator** from the available list.
+3. **Select an option:**
+   - **Plot an economic indicator graph**
+   - **Generate a heat map of all indicators**
+   - **Output top correlated indicator pairs to a text file**
 4. **View graphs** displaying economic trends over time.
 5. **Repeat selection** or type 'exit' to quit the program.
 
