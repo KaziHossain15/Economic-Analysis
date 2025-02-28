@@ -50,9 +50,9 @@ This project is a **data visualization tool** that analyzes and compares economi
 
 - **Macroeconomic Indicators**
 
-  - Real GDP (Current US\$)
+  - Real GDP (Current US$)
   - Real GDP Growth (%)
-  - GDP per Capita (US\$)
+  - GDP per Capita (US$)
   - Inflation Rate (%)
   - Unemployment Rate (%)
 
